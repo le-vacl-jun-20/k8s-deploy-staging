@@ -21,9 +21,6 @@ pipeline {
   agent {
     label 'kubegit'
   }
-  options {
-    disableConcurrentBuilds()
-  }
   stages {
     stage('Update Deployment and Service specification') {
       steps {
@@ -64,7 +61,7 @@ pipeline {
         }
       }
     }
-
+    
     
     // DO NOT uncomment until 10_01 Lab
     
@@ -144,14 +141,10 @@ pipeline {
           nonFunctionalFailure: 2, 
           specFile: "monspec/e2e_perfsig.json"
         )
-        
-        
       }
     }
-    
-  }
-  
-      stage('Deploy to production') {
+
+    stage('Deploy to staging') {
       when {
         beforeAgent true
         expression {
@@ -160,6 +153,8 @@ pipeline {
       }
       steps {
         build job: "k8s-deploy-production",
+
       }
     }
+  }
 }
