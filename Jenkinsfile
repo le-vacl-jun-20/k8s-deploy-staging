@@ -144,8 +144,22 @@ pipeline {
           nonFunctionalFailure: 2, 
           specFile: "monspec/e2e_perfsig.json"
         )
+        
+        
       }
     }
     
   }
+  
+      stage('Deploy to production') {
+      when {
+        beforeAgent true
+        expression {
+          return env.BRANCH_NAME ==~ 'release/.*'
+        }
+      }
+      steps {
+        build job: "k8s-deploy-production",
+      }
+    }
 }
