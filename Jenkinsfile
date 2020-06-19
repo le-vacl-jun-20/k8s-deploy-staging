@@ -144,13 +144,7 @@ pipeline {
       }
     }
 
-    stage('Deploy to staging') {
-      when {
-        beforeAgent true
-        expression {
-          return env.BRANCH_NAME ==~ 'release/.*'
-        }
-      }
+    stage('Deploy to production') {
       steps {
         build job: "k8s-deploy-production"
       }
