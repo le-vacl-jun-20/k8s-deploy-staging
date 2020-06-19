@@ -152,8 +152,7 @@ pipeline {
         }
       }
       steps {
-        build job: "k8s-deploy-production",
-
+        build job: "k8s-deploy-production"
       }
     }
   }
